@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body style="text-align: center;">
+    <div class = "container">
+        <h1>Can you guess the word?</h1>
+        <br>
+        <h3 style="color: rgb(255, 123, 0); font-size:28px">{{word}}</h3>
+        <br>
+        <div class = "mb-3">
+            <form action = "{% url 'first_app:game' %}" method="POST">
+                {% csrf_token %}
+                <input type = "text" name = 'guess' placeholder="Enter your guess">
+                <input type="submit" value="SUBMIT">
+            </form>
+        </div> 
+        
+        <br>
+
+        {% if guessed %}
+            <h3 style="font-size: 24px;">Was previous guess right ? </h3>
+            {% if answer == 'YES' %}
+                <h3 style="color: green; font-size:20px">- {{answer}}</h3>
+            {% else %}
+            <h3 style="color: red; font-size:20px">- {{answer}}</h3>
+            {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>
