@@ -7,10 +7,11 @@ def index(request):
     return render(request, 'first_app/index.html')
 
 def fetch_word():
-    global words
+    global words, temp
 
     words = ['one', 'air', 'four', 'help', 'none', 'java', 'make', 'like', 'nike', 'hello']
-    word =  list(random.choice(words))
+    temp = random.choice(words)
+    word =  list(temp)
 
     random.shuffle(word)
 
@@ -19,9 +20,6 @@ def fetch_word():
     return word
 
 def start_game(request):
-    
-    word = fetch_word()
-    guessed = False
 
     if request.method ==  'POST':
 
@@ -29,12 +27,12 @@ def start_game(request):
         guess = request.POST['guess']
         ans = ''
         
-        if guess in words:
+        if guess == temp:
             ans = 'YES'
         else:
             ans = 'NO'
 
-        return render(request, 'first_app/game.html', context = {'word': word, 'answer': ans, 'guessed': guessed})
+        return render(request, 'first_app/game.html', context = {'word': fetch_word(), 'answer': ans, 'guessed': guessed})
 
-    return render(request, 'first_app/game.html', context = {'word': word, 'guessed': guessed})
+    return render(request, 'first_app/game.html', context = {'word': fetch_word(), 'guessed': False})
 
